@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EF_Code_First_Approach
+namespace EF_Code_First_Approach.Models
 {
     public class Course
     {

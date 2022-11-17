@@ -1,5 +1,7 @@
 ﻿//CRUD  = CREATE, READ, UPDATE and DELETE DATA
 using EF_CRUD_Data.Models;
+using Microsoft.EntityFrameworkCore;
+
 Console.WriteLine("Hello, Entity Framework!");
 
 
@@ -63,3 +65,26 @@ foreach (var orderdetail in orderDetails)
 }
 
 
+// Loading Related Entities
+// Entity Framework supports three ways to load related data - eager loading, lazy loading and explicit loading.
+//Eagerly Loading
+// Load all the releated Items inadvanced
+var allCategories = context.Categories.Include( p => p.Products);
+foreach(var ca in allCategories)
+{
+    Console.WriteLine(ca.CategoryName + ": "  + ca.Products.Count());
+    foreach (var c in ca.Products)
+    {
+        Console.WriteLine(c.ProductName);
+    }
+}
+
+// Eagerly loading multiple levels
+var allCategories2 = context.Categories.Include(p => p.Products.Select(o=>o.OrderDetails));
+foreach (var ca in allCategories)
+{
+    foreach (var p in ca.Products)
+    {
+        Console.WriteLine(ca.CategoryName + " - " + ca.Products.Count + " " + p.OrderDetails.Count);
+    }
+}
