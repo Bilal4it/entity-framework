@@ -40,7 +40,7 @@ foreach (var c in t)
 //cat.Courses.Add(new Course() { Name = "CCSP", Description = "Certified Cloud Security Professional" });
 //service.AddCategory(cat);
 
-service.DeleteCategory(5);
+//service.DeleteCategory(5);
 
 //var s = service.GetStudentById(1);
 //Console.WriteLine(s.Name);

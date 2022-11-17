@@ -15,27 +15,9 @@ namespace EF_Code_First_Approach.Services
 
         // Loading Related Entities
         // Eagerly Loading: Load all the releated Items in advance
-        // Reading all data
         public IEnumerable<Category> GetAllCategories()
         {
             return lmsDbContext.Catagories;
-        }
-
-        // Eagerly loading multiple levels
-        public IEnumerable<Category> GetAllCategoriesWithCourses()
-        {
-            return lmsDbContext.Catagories.Include(c => c.Courses);
-        }
-
-        public IOrderedQueryable<Exam> GetGradesOfCourse(int courseId)
-        {
-            IOrderedQueryable<Exam> examsorderedByGrade = from e in lmsDbContext.Exams where e.Course.id == courseId orderby e.Grade ascending select e ;
-            return examsorderedByGrade;
-        }
-
-        public IOrderedQueryable<Exam> GetGradesOfStudent(int student)
-        {
-            throw new NotImplementedException();
         }
 
         public IEnumerable<Student> GetAllStudents()
@@ -53,6 +35,34 @@ namespace EF_Code_First_Approach.Services
             throw new NotImplementedException();
         }
 
+        // Eagerly loading multiple levels
+        public IEnumerable<Category> GetAllCategoriesWithCourses()
+        {
+            return lmsDbContext.Catagories.Include(c => c.Courses);
+        }
+
+        public IEnumerable<Student> GetAllStudentsWithExams()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Category> GetAllCategoriesWithCoursesWithExams()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IOrderedQueryable<Exam> GetGradesOfCourse(int courseId)
+        {
+            IOrderedQueryable<Exam> examsorderedByGrade = from e in lmsDbContext.Exams where e.Course.id == courseId orderby e.Grade ascending select e ;
+            return examsorderedByGrade;
+        }
+
+        public IOrderedQueryable<Exam> GetGradesOfStudent(int student)
+        {
+            throw new NotImplementedException();
+        }
+           
+
         // Reading a single entity
         public Student GetStudentById(int id)
         {
@@ -65,7 +75,7 @@ namespace EF_Code_First_Approach.Services
             throw new NotImplementedException();
         }
 
-        public List<Student> GetStudentByCountry(string country)
+        public List<Student> GetStudentByName(string country)
         {
             throw new NotImplementedException();
         }
@@ -73,6 +83,21 @@ namespace EF_Code_First_Approach.Services
         public int GetNumOfStudentsPerAddress(string city)
         {
             return lmsDbContext.Students.Where(s => s.Address == city).Count();
+        }
+
+        public int GetMaxGradeOfCourse(int CourseID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetMinGradeOfCourse(int CourseID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetMeanGradeOfCourse(int CourseID)
+        {
+            throw new NotImplementedException();
         }
 
         public List<(string,int)> GetNumOfStudentsinEachCity()
@@ -88,7 +113,26 @@ namespace EF_Code_First_Approach.Services
 
         #endregion
 
-        #region "Updating and Deleteing Data"
+        #region "Adding, Updating, and Deleteing Data"
+
+        // Save the Entity graph
+        public void AddStudent(Student student)
+        {
+            lmsDbContext.Students.Add(student);
+            lmsDbContext.SaveChanges();
+        }
+
+        public void AddCategory(Category category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddCourse(Course course)
+        {
+            throw new NotImplementedException();
+        }
+
+
         public void DeleteStudentById(int id)
         {
             var student = lmsDbContext.Students.Find(id);
@@ -99,18 +143,11 @@ namespace EF_Code_First_Approach.Services
             }
         }
 
-        public void AddStudent(Student student)
+        public void DeleteStudent(Student stdent)
         {
-            lmsDbContext.Students.Add(student);
-            lmsDbContext.SaveChanges();
+            throw new NotImplementedException();
         }
 
-        // Save the Entity graph
-        public void AddCategory(Category category)
-        {
-            lmsDbContext.Catagories.Add(category);
-            lmsDbContext.SaveChanges();
-        }
 
         public void DeleteCategory(int categoryId)
         {
@@ -126,6 +163,12 @@ namespace EF_Code_First_Approach.Services
                 lmsDbContext.SaveChanges();
             }
         }
+
+        public void DeleteCourse(int courseId)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
     }
